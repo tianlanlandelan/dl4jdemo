@@ -1,3 +1,4 @@
+import com.yangkaile.dl4j.commom.CommonUtils;
 import org.datavec.api.records.reader.RecordReader;
 import org.datavec.api.records.reader.impl.csv.CSVRecordReader;
 import org.datavec.api.split.CollectionInputSplit;
@@ -149,7 +150,7 @@ public class DataVecTest {
         NumberedFileInputSplit(String baseString, int minIdxInclusive, int maxIdxInclusive)三个参数分别是：
         格式化文件名，要读取文件的最小编号，要读取文件的最大编号
          */
-        NumberedFileInputSplit split1 = new NumberedFileInputSplit("file%house-price.cvs.txt",
+        NumberedFileInputSplit split1 = new NumberedFileInputSplit("file%house_price.csv.txt",
                 1,
                 5);
 

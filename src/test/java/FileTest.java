@@ -1,3 +1,4 @@
+import com.yangkaile.dl4j.commom.CommonUtils;
 import org.junit.Test;
 
 import java.io.BufferedReader;
@@ -10,7 +11,7 @@ public class FileTest {
     public void readLine() throws Exception{
         // 使用ArrayList来存储每行读取到的字符串
         ArrayList<String> arrayList = new ArrayList<String>();
-        FileReader fr = new FileReader(CommonUtils.getFile("demo/house-price.cvs"));
+        FileReader fr = new FileReader(CommonUtils.getFile("demo/house_price.csv"));
         BufferedReader bf = new BufferedReader(fr);
         String str;
         // 按行读取字符串

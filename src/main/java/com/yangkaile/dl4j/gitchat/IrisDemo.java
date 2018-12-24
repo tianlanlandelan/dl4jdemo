@@ -1,8 +1,7 @@
-import org.datavec.api.records.reader.RecordReader;
-import org.datavec.api.records.reader.impl.csv.CSVRecordReader;
-import org.datavec.api.split.FileSplit;
+package com.yangkaile.dl4j.gitchat;
+
+import com.yangkaile.dl4j.commom.CommonUtils;
 import org.deeplearning4j.api.storage.StatsStorage;
-import org.deeplearning4j.datasets.datavec.RecordReaderDataSetIterator;
 import org.deeplearning4j.datasets.iterator.impl.ListDataSetIterator;
 import org.deeplearning4j.nn.api.OptimizationAlgorithm;
 import org.deeplearning4j.nn.conf.MultiLayerConfiguration;
@@ -38,7 +37,7 @@ import java.util.List;
  * @date 2018-12-23 12:01:02
  *
  */
-public class Demo2 {
+public class IrisDemo {
     /**
      * batchSize 是每个批次的训练数据大小。
      */
@@ -107,7 +106,8 @@ public class Demo2 {
         final long SEED = 1234L;
         final int trainSize = 120;
         /*--------------数据集构建------------------*/
-        List<DataSet> irisList = loadIrisSeq(CommonUtils.getFile("demo/iris.cvs"));
+
+        List<DataSet> irisList = loadIrisSeq(CommonUtils.getFile("demo/iris.csv"));
         DataSet allData = DataSet.merge(irisList);
         allData.shuffle(SEED);
         SplitTestAndTrain split = allData.splitTestAndTrain(trainSize);

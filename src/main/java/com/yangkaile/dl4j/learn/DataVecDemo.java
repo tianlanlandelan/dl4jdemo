@@ -1,3 +1,6 @@
+package com.yangkaile.dl4j.learn;
+
+import com.yangkaile.dl4j.commom.CommonUtils;
 import org.apache.commons.io.FileUtils;
 import org.datavec.api.records.reader.RecordReader;
 import org.datavec.api.records.reader.impl.csv.CSVRecordReader;
@@ -18,7 +21,6 @@ import org.datavec.api.writable.Writable;
 import org.datavec.local.transforms.LocalTransformExecutor;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.DateTimeZone;
-import oshi.util.FileUtil;
 
 import java.io.File;
 import java.util.ArrayList;

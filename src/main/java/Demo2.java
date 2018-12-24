@@ -33,6 +33,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
+ * 这个例子演示MLP分类（Iris 鸢尾花分类问题）
  * @author yangkaile
  * @date 2018-12-23 12:01:02
  *
@@ -128,6 +129,8 @@ public class Demo2 {
         //loss score 监听器
         mlp.setListeners(new ScoreIterationListener(1));
 
+        //使用 Deeplearning4j 内置的 UI 页面进行观察
+        //当开始训练后，我们在浏览器中键入 http://localhost:9000/train/overview，即可看到当前训练的情况。
         UIServer uiServer = UIServer.getInstance();
         StatsStorage statsStorage = new InMemoryStatsStorage();
         uiServer.attach(statsStorage);

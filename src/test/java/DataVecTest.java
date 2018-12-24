@@ -149,7 +149,7 @@ public class DataVecTest {
         NumberedFileInputSplit(String baseString, int minIdxInclusive, int maxIdxInclusive)三个参数分别是：
         格式化文件名，要读取文件的最小编号，要读取文件的最大编号
          */
-        NumberedFileInputSplit split1 = new NumberedFileInputSplit("file%d.txt",
+        NumberedFileInputSplit split1 = new NumberedFileInputSplit("file%house-price.cvs.txt",
                 1,
                 5);
 
@@ -177,16 +177,21 @@ public class DataVecTest {
 
     @Test
     public void loadIrisIter() throws IOException, InterruptedException {
-        File file = CommonUtils.getFile("BasicDataVecExample/exampledata.csv");
-        int batchSize = 10;
-        int labelColIndex = 10;
-        int numClasses = 10;
+        File file = CommonUtils.getFile("demo/iris.data");
+        int batchSize = 3;
+        //第5列是标注
+        int labelColIndex = 4;
+        //三个分类 分类标识应该是0，1，2 要不然会报错
+        int numClasses = 3;
         RecordReader recordReader = new CSVRecordReader();
         recordReader.initialize(new FileSplit(file));
-        //batchSize 是每个批次的训练数据大小。labelColIndex 是“指定 CSV 文件中第几列是标注”。numClasses 是分类的类别数目。
+        /*
+        batchSize 是每个批次的训练数据大小。labelColIndex 是“指定 CSV 文件中第几列是标注”。numClasses 是分类的类别数目。
+         */
         DataSetIterator iterator = new RecordReaderDataSetIterator(recordReader, batchSize, labelColIndex, numClasses);
-
+        while (iterator.hasNext()){
+            System.out.println(iterator.next());
+        }
     }
-
 
 }

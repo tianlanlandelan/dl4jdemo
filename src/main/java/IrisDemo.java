@@ -26,9 +26,8 @@ import org.nd4j.linalg.factory.Nd4j;
 import org.nd4j.linalg.learning.config.Nesterovs;
 import org.nd4j.linalg.lossfunctions.LossFunctions;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -38,7 +37,7 @@ import java.util.List;
  * @date 2018-12-23 12:01:02
  *
  */
-public class Demo2 {
+public class IrisDemo {
     /**
      * batchSize 是每个批次的训练数据大小。
      */
@@ -52,6 +51,15 @@ public class Demo2 {
      */
     private static int numClasses = 3;
 
+
+    public static DataSetIterator loadIrisIter(File file) throws Exception {
+
+        RecordReader recordReader = new CSVRecordReader();
+        recordReader.initialize(new FileSplit(file));
+        DataSetIterator iterator = new RecordReaderDataSetIterator(recordReader, batchSize, labelColIndex, numClasses);
+
+        return iterator;
+    }
 
     /**
      * 我们还定义了很多超参数，如学习率、参数的初始分布、优化算法及优化器、激活函数，默认使用 BP 反向传播算法等。这些超参数对最后网络参数的收敛有直接影响，
@@ -75,31 +83,6 @@ public class Demo2 {
         return model;
     }
 
-    public static List<DataSet> loadIrisSeq(File file) {
-        List<DataSet> trainDataSetList = new LinkedList<>();
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            String line ;
-            while( (line = br.readLine()) != null ){
-                String[] token = line.split(",");
-                double[] featureArray = new double[token.length - 1];
-                double[] labelArray = new double[numClasses];
-                for( int i = 0; i < token.length - 1; i ++ ){
-                    featureArray[i] = Double.parseDouble(token[i]);
-                }
-                System.out.println(Integer.parseInt(token[token.length - 1]));
-                labelArray[Integer.parseInt(token[token.length - 1]) -1] = 1.0;
-                //
-                INDArray featureNDArray = Nd4j.create(featureArray);
-                INDArray labelNDArray = Nd4j.create(labelArray);
-                trainDataSetList.add(new DataSet(featureNDArray, labelNDArray));
-            }
-            br.close();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return trainDataSetList;
-    }
 
     public static void main(String[] args) throws Exception{
         /*--------------超参数常量声明------------------*/
@@ -107,7 +90,13 @@ public class Demo2 {
         final long SEED = 1234L;
         final int trainSize = 120;
         /*--------------数据集构建------------------*/
-        List<DataSet> irisList = loadIrisSeq(CommonUtils.getFile("demo/iris.cvs"));
+        DataSetIterator dataSetIterator = loadIrisIter(CommonUtils.getFile("demo/iris.data"));
+        List<DataSet> irisList = new ArrayList<>();
+        int j = 0;
+        while (dataSetIterator.hasNext()){
+            System.out.println(j ++);
+            irisList.add(dataSetIterator.next());
+        }
         DataSet allData = DataSet.merge(irisList);
         allData.shuffle(SEED);
         SplitTestAndTrain split = allData.splitTestAndTrain(trainSize);
@@ -122,10 +111,10 @@ public class Demo2 {
 
         //使用 Deeplearning4j 内置的 UI 页面进行观察
         //当开始训练后，我们在浏览器中键入 http://localhost:9000/train/overview，即可看到当前训练的情况。
-        UIServer uiServer = UIServer.getInstance();
-        StatsStorage statsStorage = new InMemoryStatsStorage();
-        uiServer.attach(statsStorage);
-        mlp.setListeners(new StatsListener(statsStorage));
+//        UIServer uiServer = UIServer.getInstance();
+//        StatsStorage statsStorage = new InMemoryStatsStorage();
+//        uiServer.attach(statsStorage);
+//        mlp.setListeners(new StatsListener(statsStorage));
 
         for( int i = 0; i < 20; ++i ){
             //训练模型

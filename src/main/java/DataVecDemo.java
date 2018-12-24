@@ -18,6 +18,7 @@ import org.datavec.api.writable.Writable;
 import org.datavec.local.transforms.LocalTransformExecutor;
 import org.joda.time.DateTimeFieldType;
 import org.joda.time.DateTimeZone;
+import oshi.util.FileUtil;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -139,11 +140,11 @@ public class DataVecDemo {
 
         //Print before + after:
         System.out.println("\n\n---- Original Data File ----");
-        String originalFileContents = FileUtils.readFileToString(inputFile);
+        String originalFileContents = FileUtils.readFileToString(inputFile,"UTF8");
         System.out.println(originalFileContents);
 
         System.out.println("\n\n---- Processed Data File ----");
-        String fileContents = FileUtils.readFileToString(outputFile);
+        String fileContents = FileUtils.readFileToString(outputFile,"UTF8");
         System.out.println(fileContents);
 
         System.out.println("\n\nDONE");

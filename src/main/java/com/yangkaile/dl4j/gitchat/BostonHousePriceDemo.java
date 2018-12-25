@@ -28,12 +28,17 @@ import java.io.FileReader;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * 演示MLP解决回归问题（波士顿房价预测）
+ * @author yangkaile
+ * @date 2018-12-24 14:26:07
+ */
 public class BostonHousePriceDemo {
     public static List<DataSet> loadHousePrice(File file){
         List<DataSet> totalDataSetList = new LinkedList<>();
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
-            String line = null;
+            String line ;
             while( (line = br.readLine()) != null ){
                 String[] token = line.split(",");
                 double[] featureArray = new double[token.length - 1];
